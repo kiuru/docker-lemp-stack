@@ -2,6 +2,10 @@
 
 ## Deploy
 
+Build kiuru/php:<tag>:
+
+	$ sudo docker build -t kiuru/php:5.6.15-fpm images/php/.
+
 Start docker containers:
 
 	$ sudo docker-compose up

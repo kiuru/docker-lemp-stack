@@ -8,7 +8,17 @@ nginx:
     - ./www/test:/var/www/test
   links:
     - fpm
+    - mysql
 fpm:
-  image: php:5.6.15-fpm
+  image: kiuru/php:5.6.15-fpm
   volumes:
     - ./www/test:/var/www/test
+  links:
+    - mysql
+mysql:
+  image: mysql:5.7.9
+  environment:
+    - MYSQL_ROOT_PASSWORD=my-secret-pw
+    - MYSQL_DATABASE=wordpress
+    - MYSQL_USER=my-user
+    - MYSQL_PASSWORD=my-password
