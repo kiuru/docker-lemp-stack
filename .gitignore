@@ -2,3 +2,4 @@
 !/www/test/
 /data/*
 /secrets/*
+/log/*

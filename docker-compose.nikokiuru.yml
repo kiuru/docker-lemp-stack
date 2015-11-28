@@ -10,6 +10,7 @@ nginx-nikokiuru:
   volumes:
     - ./conf.d:/etc/nginx/conf.d
     - ./www/nikokiuru:/var/www/nikokiuru
+    - ./log/nginx/nikokiuru:/var/log/nginx
   links:
     - fpm
     - mysql
@@ -23,5 +24,5 @@ fpm:
     - mysql
 mysql:
   image: mysql:5.7.9
-volumes:
-  - ./data/mysql:/var/lib/mysql
+  volumes:
+    - ./data/mysql:/var/lib/mysql
