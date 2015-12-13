@@ -29,4 +29,7 @@ mysql:
   restart: always
   image: mysql:5.7.9
   volumes:
-    - ./data/mysql:/var/lib/mysql
+    - ./data/mysql/nikokiuru:/var/lib/mysql
+  extends:
+    file: ./secrets/nikokiuru.yml
+    service: mysql
