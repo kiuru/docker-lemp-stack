@@ -11,7 +11,7 @@ nginx-nikokiuru:
   restart: always
   image: nginx:1.9.6
   volumes:
-    - ./conf.d:/etc/nginx/conf.d
+    - ./conf.d:/etc/nginx/conf.d:ro
     - ./www/nikokiuru:/var/www/nikokiuru
     - ./log/nginx/nikokiuru:/var/log/nginx
   links:
