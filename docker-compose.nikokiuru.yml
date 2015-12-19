@@ -1,6 +1,9 @@
 nginx-proxy:
   restart: always
   image: jwilder/nginx-proxy:0.2.0
+  log_driver: fluentd
+  log_opt:
+    fluentd-tag: docker.nginx-proxy
   ports:
     - 80:80
     - 443:443
@@ -11,6 +14,9 @@ nginx-proxy:
 nginx-nikokiuru:
   restart: always
   image: nginx:1.9.6
+  log_driver: fluentd
+  log_opt:
+    fluentd-tag: docker.nginx-nikokiuru
   volumes:
     - ./conf.d:/etc/nginx/conf.d:ro
     - ./www/nikokiuru:/var/www/nikokiuru
@@ -26,6 +32,9 @@ nginx-nikokiuru:
 fpm:
   restart: always
   image: kiuru/php:5.6.15-fpm
+  log_driver: fluentd
+  log_opt:
+    fluentd-tag: docker.fpm
   volumes:
     - ./www/nikokiuru:/var/www/nikokiuru
     - ./php.ini:/usr/local/etc/php/php.ini:ro
@@ -34,8 +43,15 @@ fpm:
 mysql:
   restart: always
   image: mysql:5.7.9
+  log_driver: fluentd
+  log_opt:
+    fluentd-tag: docker.mysql
   volumes:
     - ./data/mysql/nikokiuru:/var/lib/mysql
   extends:
     file: ./secrets/nikokiuru.yml
     service: mysql
+fluentd:
+  extends:
+    file: ./docker-compose.fluentd.yml
+    service: fluentd

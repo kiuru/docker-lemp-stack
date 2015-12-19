@@ -1,0 +1,8 @@
+fluentd:
+  restart: always
+  image: fluent/fluentd:v0.12.18
+  ports:
+    - 24224:24224
+  volumes:
+    - ./fluent.conf:/fluentd/etc/fluent.conf:ro
+    - ./data/fluentd:/fluentd/log
