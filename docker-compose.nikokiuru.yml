@@ -1,3 +1,8 @@
+fluentd:
+  extends:
+    file: ./docker-compose.fluentd.yml
+    service: fluentd
+
 nginx-proxy:
   restart: always
   image: jwilder/nginx-proxy:0.2.0
@@ -11,6 +16,9 @@ nginx-proxy:
     - /var/run/docker.sock:/tmp/docker.sock:ro
     - ./nginx.conf:/etc/nginx/nginx.conf:ro
     - ./secrets/certs:/etc/nginx/certs:ro
+  environment:
+    - TZ=Europe/Helsinki
+
 nginx-nikokiuru:
   restart: always
   image: nginx:1.9.6
@@ -26,9 +34,11 @@ nginx-nikokiuru:
     - fpm
     - mysql
   environment:
+    - TZ=Europe/Helsinki
     - VIRTUAL_HOST=nikokiuru.com
     - VIRTUAL_PORT=443
     - VIRTUAL_PROTO=https
+
 fpm:
   restart: always
   image: kiuru/php:5.6.15-fpm
@@ -40,6 +50,9 @@ fpm:
     - ./php.ini:/usr/local/etc/php/php.ini:ro
   links:
     - mysql
+  environment:
+    - TZ=Europe/Helsinki
+
 mysql:
   restart: always
   image: mysql:5.7.9
@@ -51,7 +64,5 @@ mysql:
   extends:
     file: ./secrets/nikokiuru.yml
     service: mysql
-fluentd:
-  extends:
-    file: ./docker-compose.fluentd.yml
-    service: fluentd
+  environment:
+    - TZ=Europe/Helsinki

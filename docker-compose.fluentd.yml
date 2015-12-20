@@ -6,3 +6,5 @@ fluentd:
   volumes:
     - ./fluent.conf:/fluentd/etc/fluent.conf:ro
     - ./data/fluentd:/fluentd/log
+  environment:
+    - TZ=Europe/Helsinki
