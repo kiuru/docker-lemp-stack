@@ -26,6 +26,15 @@ Source docs:
 	$ echo "Europe/Helsinki" | sudo tee /etc/timezone
 	$ sudo dpkg-reconfigure -f noninteractive tzdata
 
+## Configure firewall
+
+	$ sudo ufw allow ssh
+	$ sudo ufw allow http/tcp
+	$ sudo ufw allow https/tcp
+	$ sudo ufw default allow outgoing
+	$ sudo ufw default deny incoming
+	$ sudo ufw enable
+
 ## Deploy
 
 Build kiuru/php:<tag>:
