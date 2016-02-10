@@ -35,6 +35,13 @@ Source docs:
 	$ sudo ufw default deny incoming
 	$ sudo ufw enable
 
+## Automatic security updates
+
+	$ sudo dpkg-reconfigure --priority=low unattended-upgrades
+
+Source:
+- https://help.ubuntu.com/community/AutomaticSecurityUpdates
+
 ## Deploy
 
 Build kiuru/php:<tag>:
