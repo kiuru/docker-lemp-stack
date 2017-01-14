@@ -5,7 +5,7 @@ fluentd:
 
 nginx-proxy:
   restart: always
-  image: jwilder/nginx-proxy:0.2.0
+  image: jwilder/nginx-proxy:0.5.0
   log_driver: fluentd
   log_opt:
     fluentd-tag: docker.nginx-proxy
@@ -21,7 +21,7 @@ nginx-proxy:
 
 nginx-nikokiuru:
   restart: always
-  image: nginx:1.9.6
+  image: nginx:1.11
   log_driver: fluentd
   log_opt:
     fluentd-tag: docker.nginx-nikokiuru
@@ -55,7 +55,7 @@ fpm:
 
 mysql:
   restart: always
-  image: mysql:5.7.9
+  image: mysql:5.7
   log_driver: fluentd
   log_opt:
     fluentd-tag: docker.mysql
