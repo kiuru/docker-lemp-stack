@@ -1,69 +1,75 @@
-fluentd:
-  extends:
-    file: ./docker-compose.fluentd.yml
-    service: fluentd
+version: '2'
+services:
+  fluentd:
+    extends:
+      file: ./docker-compose.fluentd.yml
+      service: fluentd
 
-nginx-proxy:
-  restart: always
-  image: jwilder/nginx-proxy:0.5.0
-  log_driver: fluentd
-  log_opt:
-    fluentd-tag: docker.nginx-proxy
-  ports:
-    - 80:80
-    - 443:443
-  volumes:
-    - /var/run/docker.sock:/tmp/docker.sock:ro
-    - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    - ./secrets/certs:/etc/nginx/certs:ro
-  environment:
-    - TZ=Europe/Helsinki
+  nginx-proxy:
+    restart: always
+    image: jwilder/nginx-proxy:0.5.0
+    logging:
+      driver: fluentd
+      options:
+        tag: docker.ngingx-proxy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./secrets/certs:/etc/nginx/certs:ro
+    environment:
+      - TZ=Europe/Helsinki
 
-nginx-nikokiuru:
-  restart: always
-  image: nginx:1.11
-  log_driver: fluentd
-  log_opt:
-    fluentd-tag: docker.nginx-nikokiuru
-  volumes:
-    - ./conf.d:/etc/nginx/conf.d:ro
-    - ./www/nikokiuru:/var/www/nikokiuru
-    - ./log/nginx/nikokiuru:/var/log/nginx
-    - ./secrets/certs:/etc/nginx/certs:ro
-  links:
-    - fpm
-    - mysql
-  environment:
-    - TZ=Europe/Helsinki
-    - VIRTUAL_HOST=nikokiuru.com
-    - VIRTUAL_PORT=443
-    - VIRTUAL_PROTO=https
+  nginx-nikokiuru:
+    restart: always
+    image: nginx:1.11
+    logging:
+      driver: fluentd
+      options:
+        tag: docker.nginx-nikokiuru
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d:ro
+      - ./www/nikokiuru:/var/www/nikokiuru
+      - ./log/nginx/nikokiuru:/var/log/nginx
+      - ./secrets/certs:/etc/nginx/certs:ro
+    links:
+      - fpm
+      - mysql
+    environment:
+      - TZ=Europe/Helsinki
+      - VIRTUAL_HOST=nikokiuru.com
+      - VIRTUAL_PORT=443
+      - VIRTUAL_PROTO=https
 
-fpm:
-  restart: always
-  image: kiuru/php:5.6.15-fpm
-  log_driver: fluentd
-  log_opt:
-    fluentd-tag: docker.fpm
-  volumes:
-    - ./www/nikokiuru:/var/www/nikokiuru
-    - ./php.ini:/usr/local/etc/php/php.ini:ro
-  links:
-    - mysql
-  environment:
-    - TZ=Europe/Helsinki
+  fpm:
+    restart: always
+    image: kiuru/php:5.6.15-fpm
+    logging:
+      driver: fluentd
+      options:
+        tag: docker.fpm
+    volumes:
+      - ./www/nikokiuru:/var/www/nikokiuru
+      - ./php.ini:/usr/local/etc/php/php.ini:ro
+    links:
+      - mysql
+    environment:
+      - TZ=Europe/Helsinki
 
-mysql:
-  restart: always
-  image: mysql:5.7
-  log_driver: fluentd
-  log_opt:
-    fluentd-tag: docker.mysql
-  volumes:
-    - ./data/mysql/nikokiuru:/var/lib/mysql
-    - ./my.cnf:/etc/mysql/conf.d/my.cnf
-  extends:
-    file: ./secrets/nikokiuru.yml
-    service: mysql
-  environment:
-    - TZ=Europe/Helsinki
+  mysql:
+    restart: always
+    image: mysql:5.7
+    logging:
+      driver: fluentd
+      options:
+        tag: docker.mysql
+    volumes:
+      - ./data/mysql/nikokiuru:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+    extends:
+      file: ./secrets/nikokiuru.yml
+      service: mysql
+    environment:
+      - TZ=Europe/Helsinki
