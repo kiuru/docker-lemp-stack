@@ -61,6 +61,7 @@ mysql:
     fluentd-tag: docker.mysql
   volumes:
     - ./data/mysql/nikokiuru:/var/lib/mysql
+    - ./my.cnf:/etc/mysql/conf.d/my.cnf
   extends:
     file: ./secrets/nikokiuru.yml
     service: mysql
