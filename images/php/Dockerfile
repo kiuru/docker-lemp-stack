@@ -1,2 +1,2 @@
-FROM php:5.6.15-fpm
-RUN docker-php-ext-install mysql mysqli pdo pdo_mysql
+FROM php:7.1-fpm
+RUN docker-php-ext-install mysqli pdo pdo_mysql
