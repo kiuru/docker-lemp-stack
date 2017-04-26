@@ -39,7 +39,7 @@ services:
       - mysql
     environment:
       - TZ=Europe/Helsinki
-      - VIRTUAL_HOST=nikokiuru.com
+      - VIRTUAL_HOST=nikokiuru.com,www.nikokiuru.com
       - VIRTUAL_PORT=443
       - VIRTUAL_PROTO=https
 
