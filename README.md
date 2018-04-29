@@ -2,11 +2,11 @@
 
 ## Install Docker and Docker Compose
 
-	$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-	$ echo "deb https://apt.dockerproject.org/repo ubuntu-$(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/docker.list
-	$ sudo apt-get update
-	$ sudo apt-get install -y linux-image-extra-$(uname -r) docker-engine curl
-	$ sudo sh -c "curl -L https://github.com/docker/compose/releases/download/1.5.1/docker-compose-$(uname -s)-$(uname -m) > /usr/local/bin/docker-compose"
+	$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+	$ echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+	$ sudo apt update
+	$ sudo apt install -y linux-image-extra-$(uname -r) docker-ce curl
+	$ sudo sh -c "curl -L https://github.com/docker/compose/releases/download/1.21.1/docker-compose-$(uname -s)-$(uname -m) > /usr/local/bin/docker-compose"
 	$ sudo chmod +x /usr/local/bin/docker-compose
 
 Source docs:
@@ -55,7 +55,7 @@ Source:
 
 Build kiuru/php:<tag>:
 
-	$ sudo docker build -t kiuru/php:5.6.15-fpm images/php/.
+	$ sudo docker build -t kiuru/php:7.1-fpm images/php/.
 
 Start docker containers on background:
 
